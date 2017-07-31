@@ -1,5 +1,5 @@
 module.exports = {
-	api: '/guide/order/detail',
+	api: '/user/account/log',
 	response: function(req, res) {
 		res.json({
 			state: 0,

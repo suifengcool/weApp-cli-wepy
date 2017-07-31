@@ -3,26 +3,29 @@ import Router from 'vue-router'
 
 Vue.use(Router)
 
-// 页面路径(相对 ../page)
+// 页面路径(相对 ./views)
 let config = [
-    // 景点相关
-    '/viewport/detail',                  // 景点明细
-    '/viewport/search',                  // 景点明细
-
     // 个人相关
-    '/user/collect',                 // 我的收藏
-    '/user/support',                 // 帮助与支持
+    '/home/index',                  // 首页(‘我的’页面)
+
+    '/user/line',                   // 线路管理
+    '/user/create',                 // 旅游内容(修改路线)
+    '/user/money',                  // 我的钱包
+    '/user/detail',                 // 收支明细
+    '/user/getCash',                // 收支明细
+
+    // 完善信息
+    '/info/index',                  // 个人信息-首页
+    '/info/rules',                  // 个人信息-细则
+    '/info/identify',               // 个人信息-审核页
+    '/info/detail',                 // 个人信息详情
 
     // 订单相关
-    '/order/create',                 // 订单创建(预定页)
-    '/order/success',                // 订单成功页
-    '/order/detail/confirm',         // 订单详情-待确认
-    '/order/detail/success',         // 订单详情-预定成功
-    '/order/detail/pay',             // 订单详情-已确认(待支付+pay)
+    '/order/index',                 // 订单列表(已确认、未确认)
+    '/order/confirm',               // 确认订单  
 
-    // 评论相关
-    '/comment/index',                // 评论页
-    '/comment/list',                 // 评论列表页
+    // 未授权
+    '/auth' // 未授权页
 ]
 
 // 定义路由
@@ -33,58 +36,20 @@ config.forEach((value, index, arr) => {
     routes.push({
         path: value.replace(/(\/index|home\/index)$/g, ''),
         component: resolve => require(
-            ['../page' + value.replace(/\/(\:|\?)[A-z]+$/g, '') + '.vue'],
+            ['../views' + value.replace(/\/(\:|\?)[A-z]+$/g, '') + '.vue'],
             resolve
         )
     })
 })
 
-// 底部菜单切换
-routes.push({
-    path: '/',
-    component: resolve => require(
-        ['../components/footTabBar.vue'],
-        resolve
-    ),
-    children: [
-        // 首页(景点)
-        {
-            path: '/',
-            component: resolve => require(
-                ['../page/home/index.vue'],
-                resolve
-            ),
-            meta: { keepAlive: true }
-        },
-        // 订单
-        {
-            path: 'order/list',
-            component: resolve => require(
-                ['../page/order/list.vue'],
-                resolve
-            ),
-            meta: { keepAlive: true }
-        },
-        // 用户中心
-        {
-            path: 'user',
-            component: resolve => require(
-                ['../page/user/index.vue'],
-                resolve
-            ),
-            meta: { keepAlive: true }
-        }
-    ]
-})
-
 // 404 页面
 routes.push({
     path: '*',
-    component: resolve => require(['../page/404.vue'], resolve)
+    component: resolve => require(['../views/404.vue'], resolve)
 })
 
 export default new Router({
-    mode: 'hash',              // HTML5 history 模式
+    mode: 'hash',
     linkActiveClass: 'active',
     routes: routes
 })

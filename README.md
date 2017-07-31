@@ -40,7 +40,7 @@
     │   │   └── index.js
     │   ├── store                           应用级数据（state）
     │   │   └── index.js
-    │   └── page                            页面目录
+    │   └── views                           页面目录
     │       ├── hello.vue
     │       └── notfound.vue
     ├── static                          纯静态资源，不会被wabpack构建。
@@ -115,23 +115,25 @@
 整个应用通过 vue 组件的方式搭建起来，通过 vue-router 控制相应组件的展现，组件树结构如下：
 
     app.vue                         根组件（整个应用只有一个）
-        ├──page1.vue                    页面级组件，放在 page 目录里面，有子组件时，可以建立子目录
-        │   ├──component1.vue               功能组件，公用的放在 components 目录，否则放在 page 子目录
+        ├──view1.vue                    页面级组件，放在 views 目录里面，有子组件时，可以建立子目录
+        │   ├──component1.vue               功能组件，公用的放在 components 目录，否则放在 views 子目录
         │   ├──component2.vue
         │   └──component3.vue
-        ├──page2.vue
+        ├──view2.vue
         │   ├──component1.vue
         │   └──component4.vue
-        └──page3.vue
+        └──view3.vue
             ├──component5.vue
             ……
+
+
 
 ## 联调方式
 
 前后端分离后，由于服务端和前端的开发环境处于2台不同的机器上，前端的异步请求需要代理到后端机器中。
 联调的时候，只需通过 proxy 参数运行 dev 脚本即可，所有 mock 目录下定义的接口将会转发到 proxy 参数指定的机器：
 
-    # 115.29.78.189:9280 为后端机器的环境地址
+    # 172.16.36.90:8083 为后端机器的环境地址
     npm run dev -- --proxy=115.29.78.189:9280
 
 这样，如果 mock 目录下有定义了接口 /api/hello ，将会转发到 http://172.16.36.90/:8083/api/hello

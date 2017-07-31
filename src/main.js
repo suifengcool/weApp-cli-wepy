@@ -2,28 +2,20 @@ import 'babel-polyfill'
 import Vue from 'vue'
 import Config from './config'
 import VueResource from 'vue-resource'
+import * as Storage from './plugin/storage'
+import * as filters from './filters'
 import Moment from 'moment'
 import {sync} from 'vuex-router-sync'
 import { mapGetters, mapActions } from 'vuex'
-import Fetch from './components/Fetch'
+
+// vux相关组件
+import {ToastPlugin, WechatPlugin, LoadingPlugin, AlertPlugin} from 'vux'
 
 import App from './app'
 import router from './router'
 import store from './store'
 
-// 全局引入 vmui
-import VMUI from 'vmui'
-import 'vmui/dist/vmui.rem.css'
-import 'vmui/dist/vmui.flexible'
-Vue.use(VMUI)
-
-// 全局注册空态
-import dummyStatus from './components/dummyStatus'
-Vue.component('dummyStatus',dummyStatus)
-
-// 全局注册回到顶部按钮
-import backTop from './components/backTop'
-Vue.component('backTop',backTop)
+// import NProgress from 'vue-nprogress'
 
 // 点击延迟
 import FastClick from 'fastclick'
@@ -36,8 +28,26 @@ Vue.config.debug = process.env.NODE_ENV === 'dev'
 Moment.locale('zh-cn')
 global.moment = Moment
 
+// 设置全局localStorage
+global.storage = Storage
+
+// 加载过滤器
+Object.keys(filters).forEach(key => {
+    Vue.filter(key, filters[key])
+})
+
+// 加载进度条
+/*const nprogress = new NProgress({
+    parent: '.nprogress-container'
+})*/
+
 // 加载组件
 Vue.use(VueResource)
+Vue.use(WechatPlugin)
+Vue.use(ToastPlugin)
+Vue.use(LoadingPlugin)
+Vue.use(AlertPlugin)
+// Vue.use(NProgress)
 
 const wx = Vue.wechat
 
@@ -90,13 +100,13 @@ Vue.http.interceptors.push((req, next) => {
 // }
 
 window.vm = new Vue({
+    // nprogress,
     el: '#app',
     router,
     store,
     render: h => h(App),
     data: {
         config: Config, // 全局注入配置
-        fetch: Fetch,   // fetch
         mapGetters,     // 全局引入 vuex mapGetters 函数
         mapActions      // 全局引入 vuex mapActions 函数
     }
