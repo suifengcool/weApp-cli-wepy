@@ -1,4 +1,4 @@
-# 店族小程序
+# 微信小程序
 
 本项目基于wepy开发，[参考这里](https://github.com/wepyjs/wepy)
 
@@ -13,13 +13,13 @@ npm install wepy-cli -g
 - 2. 下载源代码
 
 ```bash
-git clone git@git.meiwan.me:zhangl/dzminiapp.git
+git clone git@github.com:suifengcool/miniapp.git
 ```
 
 - 3. 安装开发依赖
 
 ```bash
-cd dzminiapp
+cd miniapp
 npm install
 ```
 
@@ -35,7 +35,7 @@ npm run dev
 
 编译完成后会生成`dist`目录。
 
-打开开发者工具，新建小程序项目，目录指向 `/dzminiapp/dist`
+打开开发者工具，新建小程序项目，目录指向 `/miniapp/dist`
 
 **切记： 取消勾选`开发者工具->项目->开启ES6转ES5`，否则代码运行出现错误。**
 
@@ -76,4 +76,4 @@ npm run build
 ### 其他
 
 - [微信小程序开发者文档](https://mp.weixin.qq.com/debug/wxadoc/dev/index.html)
-- [小程序框架wepy文档](https://wepyjs.github.io/wepy)
+- [小程序框架wepy文档](https://github.com/Tencent/wepy)
